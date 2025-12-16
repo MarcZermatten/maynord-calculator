@@ -440,7 +440,15 @@ def export_calculation_to_pdf(
     summary = get_complete_gradation_summary(result.d30, coeffs.get('Ss', 2.65))
 
     def format_mass(m):
-        return f"{m:.1f} kg" if m < 1000 else f"{m/1000:.2f} t"
+        """Returns (value, unit) tuple"""
+        if m < 1000:
+            return f"{m:.1f}", "kg"
+        else:
+            return f"{m/1000:.2f}", "t"
+
+    m_d30_val, m_d30_unit = format_mass(result.mass_d30)
+    m_d50_val, m_d50_unit = format_mass(result.mass_d50)
+    m_d100_val, m_d100_unit = format_mass(result.mass_d100)
 
     results_data = [
         ["RESULTATS DE DIMENSIONNEMENT", "", ""],
@@ -448,9 +456,9 @@ def export_calculation_to_pdf(
         ["Diametre D50 (estime)", f"{result.d50:.1f}", "mm"],
         ["Diametre D100 (estime)", f"{result.d100:.1f}", "mm"],
         ["", "", ""],
-        ["Masse unitaire D30", format_mass(result.mass_d30), ""],
-        ["Masse unitaire D50", format_mass(result.mass_d50), ""],
-        ["Masse unitaire D100", format_mass(result.mass_d100), ""],
+        ["Masse unitaire D30", m_d30_val, m_d30_unit],
+        ["Masse unitaire D50", m_d50_val, m_d50_unit],
+        ["Masse unitaire D100", m_d100_val, m_d100_unit],
         ["", "", ""],
         ["Epaisseur de couche", f"{result.thickness:.1f}", "cm"],
         ["Classe de gradation", summary.usace_class, "USACE"],
