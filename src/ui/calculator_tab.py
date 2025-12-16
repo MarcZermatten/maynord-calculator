@@ -49,13 +49,24 @@ class CalculatorTab(QWidget):
         self.splitter.setHandleWidth(8)
         self.splitter.setChildrenCollapsible(False)
 
-        # ===== LEFT PANEL - Inputs (compact) =====
+        # ===== LEFT PANEL - Inputs in ScrollArea =====
+        # Create scroll area for sidebar
+        left_scroll = QScrollArea()
+        left_scroll.setWidgetResizable(True)
+        left_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        left_scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        left_scroll.setMinimumWidth(360)
+        left_scroll.setMaximumWidth(500)
+        left_scroll.setFrameShape(QFrame.NoFrame)
+
+        # Content widget inside scroll area
         left_widget = QWidget()
         left_layout = QVBoxLayout(left_widget)
-        left_layout.setSpacing(6)
+        left_layout.setSpacing(8)
         left_layout.setContentsMargins(8, 8, 8, 8)
-        left_widget.setMinimumWidth(340)
-        left_widget.setMaximumWidth(500)
+
+        # Set minimum height for content to prevent shrinking
+        left_widget.setMinimumHeight(620)
 
         # Hydraulic parameters
         self.hydraulic_group = self.create_hydraulic_group()
@@ -69,36 +80,36 @@ class CalculatorTab(QWidget):
         self.coeff_group = self.create_coefficients_group()
         left_layout.addWidget(self.coeff_group)
 
-        # Buttons - Calculate/Reset (compact)
+        # Buttons - Calculate/Reset
         btn_layout = QHBoxLayout()
         btn_layout.setSpacing(8)
 
         self.calc_btn = QPushButton("🔬 Calculer")
         self.calc_btn.setObjectName("primaryButton")
-        self.calc_btn.setMinimumHeight(40)
+        self.calc_btn.setMinimumHeight(42)
         self.calc_btn.setToolTip("Lancer le calcul de dimensionnement (Ctrl+Enter)")
         self.calc_btn.clicked.connect(self.calculate)
         btn_layout.addWidget(self.calc_btn, 2)
 
         self.reset_btn = QPushButton("↺ Reset")
-        self.reset_btn.setMinimumHeight(40)
+        self.reset_btn.setMinimumHeight(42)
         self.reset_btn.setToolTip("Remettre tous les parametres par defaut")
         self.reset_btn.clicked.connect(self.reset)
         btn_layout.addWidget(self.reset_btn, 1)
 
         left_layout.addLayout(btn_layout)
 
-        # Export buttons (compact)
+        # Export buttons
         export_layout = QHBoxLayout()
-        export_layout.setSpacing(6)
+        export_layout.setSpacing(8)
 
         self.export_excel_btn = QPushButton("📊 Excel")
-        self.export_excel_btn.setMinimumHeight(32)
+        self.export_excel_btn.setMinimumHeight(36)
         self.export_excel_btn.setToolTip("Exporter le rapport en Excel (.xlsx)")
         export_layout.addWidget(self.export_excel_btn)
 
         self.export_pdf_btn = QPushButton("📄 PDF")
-        self.export_pdf_btn.setMinimumHeight(32)
+        self.export_pdf_btn.setMinimumHeight(36)
         self.export_pdf_btn.setToolTip("Exporter le rapport en PDF")
         export_layout.addWidget(self.export_pdf_btn)
 
@@ -106,10 +117,15 @@ class CalculatorTab(QWidget):
 
         # Add to comparison button
         self.add_comparison_btn = QPushButton("➕ Ajouter a comparaison")
-        self.add_comparison_btn.setMinimumHeight(32)
+        self.add_comparison_btn.setMinimumHeight(36)
         self.add_comparison_btn.setToolTip("Stocker ce calcul dans l'onglet Comparaison")
-        self.add_comparison_btn.setEnabled(False)  # Disabled until calculation done
+        self.add_comparison_btn.setEnabled(False)
         left_layout.addWidget(self.add_comparison_btn)
+
+        left_layout.addStretch()
+
+        # Set content widget in scroll area
+        left_scroll.setWidget(left_widget)
 
         # ===== RIGHT PANEL - Results with vertical splitter =====
         right_widget = QWidget()
@@ -138,7 +154,7 @@ class CalculatorTab(QWidget):
         right_layout.addWidget(self.v_splitter)
 
         # Add panels to horizontal splitter
-        self.splitter.addWidget(left_widget)
+        self.splitter.addWidget(left_scroll)
         self.splitter.addWidget(right_widget)
 
         # Set initial sizes (left: 380px, right: remaining)
