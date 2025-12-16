@@ -398,6 +398,13 @@ QMenu::item:selected {
     background: #2563eb;
     color: white;
 }
+QScrollArea {
+    background: transparent;
+    border: none;
+}
+QScrollArea > QWidget > QWidget {
+    background: transparent;
+}
 #header {
     background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
         stop:0 #1e40af, stop:1 #3b82f6);
@@ -933,6 +940,13 @@ QMenu {
 QMenu::item:selected {
     background: #0ea5e9;
     color: white;
+}
+QScrollArea {
+    background: transparent;
+    border: none;
+}
+QScrollArea > QWidget > QWidget {
+    background: transparent;
 }
 QSplitter::handle {
     background: #334155;
