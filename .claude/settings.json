@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "deny": [
+      "Write(C:\\Windows\\**)",
+      "Write(C:\\Program Files\\**)",
+      "Write(C:\\Program Files (x86)\\**)",
+      "Write(C:\\ProgramData\\**)",
+      "Edit(C:\\Windows\\**)",
+      "Edit(C:\\Program Files\\**)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)"
+    ],
+    "allow": [
+      "Read(C:\\Users\\Marc\\GeoBrain\\maynord-calculator/**)",
+      "Write(C:\\Users\\Marc\\GeoBrain\\maynord-calculator/**)",
+      "Edit(C:\\Users\\Marc\\GeoBrain\\maynord-calculator/**)",
+      "Bash(git:*)",
+      "Bash(npm:*)",
+      "Bash(cargo:*)",
+      "Bash(python:*)",
+      "Bash(pip:*)"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "enabledMcpjsonServers": [
+    "postgres-bussigny",
+    "filesystem",
+    "playwright",
+    "puppeteer"
+  ],
+  "enableAllProjectMcpServers": true
+}
